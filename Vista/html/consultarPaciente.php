@@ -34,7 +34,7 @@
     ?>
         <p>El paciente no existe en la base de datos.</p>
         <input type="button" name="ingPaciente" id="ingPaciente" value="Ingresar
-Paciente" onclik="ingPaciente()">
+Paciente" onclick="mostrarFormulario()">
     <?php
     }
     ?>

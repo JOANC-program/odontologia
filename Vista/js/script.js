@@ -1,9 +1,11 @@
-function consultarPaciente() {
-
-    var url = "index.php?accion=ConsultarPaciente&documento=" +
-        $("#asignarDocumento").val();
-    $("#paciente").load(url, function () {
-    });
+function insertarPaciente() {
+    queryString = $("#agregarPaciente").serialize();
+    url = "index.php?accion=ingresarPaciente&" + queryString;
+    $("#paciente").load(url);
+    $("#frmPaciente").dialog('close');
+}
+function cancelar() {
+    $(this).dialog('close');
 }
 $(document).ready(function () {
     $("#frmPaciente").dialog({
