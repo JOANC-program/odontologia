@@ -4,8 +4,10 @@
 <head>
     <title>Consultar Cita</title>
     <link rel="stylesheet" type="text/css" href="Vista/css/estilos.css">
-    <script type="text/javascript" src="Vistas/jquery/jquery.js"></script>
-    <script type="text/javascript" src="Vista/js/script.js"></script>
+    <link href="Vista/jquery/jquery-ui-1.14.1/jquery-ui.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="Vista/jquery/jquery.js"></script>
+    <script src="Vista/jquery/jquery-ui-1.14.1/jquery-ui.js" type="text/javascript"></script>
+    <script src="Vista/js/script.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -23,20 +25,20 @@
         <div id="contenido">
             <h2>Consultar Cita</h2>
             <form action="index.php?accion=consultarCita" method="post" id="frmconsultar">
-                <table>
+                <table>  
                     <tr>
                         <td>Documento del paciente</td>
-                        <td><input type="text" name="asignarDocumento" id="asignarDocumento"></td>
+                        <td><input type="text" name="consultarDocumento" id="consultarDocumento"></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><input type="button" value="Consultar" name="asignarConsultar"
-                                id="asignarConsultar"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div id="paciente"></div>
-                        </td>
-                    </tr>
+                        <td colspan="2"><input type="button" name="consultarConsultar"
+                                value="Consultar" id="consultarConsultar" onclick="consultarCita()"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div id="paciente2"></div>
+                            </td>
+                        </tr>
                 </table>
             </form>
         </div>

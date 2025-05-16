@@ -8,8 +8,6 @@
     <script type="text/javascript" src="Vista/jquery/jquery.js"></script>
     <script src="Vista/jquery/jquery-ui-1.14.1/jquery-ui.js" type="text/javascript"></script>
     <script src="Vista/js/script.js" type="text/javascript"></script>
-    <script>
-    </script>
 </head>
 
 <body>
@@ -30,7 +28,7 @@
                 <table>
                     <tr>
                         <td>Documento del paciente</td>
-                        <td><input type="text" name="asignarDocumento" id="asignarDocumento"></
+                        <td><input type="text" name="asignarDocumento" id="asignarDocumento" required></
                                 td>
                     </tr>
                     <tr>
@@ -43,43 +41,59 @@
                         </td>
                     </tr>
                     <tr>
+                    <tr>
                         <td>Médico</td>
                         <td>
-                            <select id="medico" name="medico">
+                            <select id="medico" name="medico" onchange="cargarHoras()">
                                 <option value="-1" selected="selected">---Selecione el
                                     Médico</option>
-                                <option value="12345">12345-Pepito Pérez</option>
-                                <option value="67890">67890-Pepita Mendieta</option>
+                                <?php
+
+                                while ($fila = $result->fetch_object()) {
+                                ?>
+
+                                    <option value=<?php echo $fila->MedIdentificacion; ?>>
+                                        <?php echo $fila->MedIdentificacion . " " . $fila->MedNombres . " " . $fila->MedApellidos; ?>
+                                    </option>
+                                <?php } ?>
                             </select>
                         </td>
+                    </tr>
                     </tr>
                     <tr>
                         <td>Fecha</td>
                         <td>
-                            <input type="date" id="fecha" name="fecha">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Hora</td>
-                        <td>
-                            <select id="hora" name="hora">
-                                <option value="-1" selected="selected">---Seleccione la
-                                    hora ---</option>
-                                <option>08:00:00</option>
-                                <option>08:20:00</option>
-                                <option>08:40:00</option>
-                                <option>09:00:00</option>
-                            </select>
+                            <input type="date" id="fecha" name="fecha" onchange="cargarHoras()">
                         </td>
                     </tr>
                     <tr>
                         <td>Consultorio</td>
                         <td>
-                            <select id="consultorio" name="consultorio">
-                                <option value="-1" selected="selected">---Seleccione el
-                                    Consultorio---</option>
-                                <option value="1">1 Consultas 1</option>
-                                <option value="2">2 Tratamientos 1</option>
+                            <select id="consultorio" name="consultorio"
+                                onchange="cargarHoras()">
+                                <option value="-1" selected="selected">---Selecione el
+                                    Consultorio</option>
+                                <?php
+
+                                while ($fila = $result2->fetch_object()) {
+                                ?>
+
+                                    <option value=<?php echo $fila->ConNumero; ?>>
+                                        <?php echo $fila->ConNumero . " - " . $fila->ConNombre;
+
+                                        ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </td>
+                    </tr>
+                    </tr>
+                    <tr>
+                        <td>Hora</td>
+                        <td>
+                            <select id="hora" name="hora" onmousedown="seleccionarHora()">
+                                <option value="-1" selected="selected">---Seleccione
+                                    la hora ---</option>
                             </select>
                         </td>
                     </tr>

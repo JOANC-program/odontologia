@@ -15,12 +15,6 @@
                 <th>Número</th>
                 <th>Fecha</th>
                 <th>Hora</th>
-                <th>Paciente</th>
-                <th>Medico</th>
-                <th>Consultorio</th>
-                <th>Estado</th>
-                <th>Observar</th>
-            </tr>
             <?php
             while ($fila = $result->fetch_object()) {
             ?>
@@ -28,11 +22,8 @@
                     <td><?php echo $fila->CitNumero; ?></td>
                     <td><?php echo $fila->CitFecha; ?></td>
                     <td><?php echo $fila->CitHora; ?></td>
-                    <td><?php echo $fila->CitPaciente; ?></td>
-                    <td><?php echo $fila->CitMedico; ?></td>
-                    <td><?php echo $fila->CitConsultorio; ?></td>
-                    <td><?php echo $fila->CitEstado; ?></td>
-                    <td><?php echo $fila->citObservaciones; ?></td> 
+                    <td><a href="index.php?accion=verCita&numero=<?php echo $fila->CitNumero;
+?>">Ver</a></td>
                 </tr>
             <?php
             }

@@ -4,8 +4,10 @@
 <head>
     <title>Cancelar Cita</title>
     <link rel="stylesheet" type="text/css" href="Vista/css/estilos.css">
-    <script type="text/javascript" src="Vistas/jquery/jquery.js"></script>
-    <script type="text/javascript" src="Vista/js/script.js"></script>
+    <link href="Vista/jquery/jquery-ui-1.14.1/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="Vista/jquery/jquery.js"></script>
+    <script src="Vista/jquery/jquery-ui-1.14.1/jquery-ui.js" type="text/javascript"></script>
+    <script src="Vista/js/script.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -17,7 +19,7 @@
             <li><a href="index.php">inicio</a> </li>
             <li><a href="index.php?accion=asignar">Asignar</a> </li>
             <li><a href="index.php?accion=consultar">Consultar Cita</a> </li>
-            <li class="activa"><a href="index.php?accion=consultar">Cancelar</a>
+            <li class="activa"><a href="index.php?accion=consultar">Cancelar Cita</a>
         </ul>
         <div id="contenido">
             <h2>Cancelar Cita</h2>
@@ -32,8 +34,8 @@
                                 id="cancelarDocumento"></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><input type="submit"
-                                name="cancelarConsultar" value="Consultar" id="cancelarConsultar"></td>
+                        <td colspan="2"><input type="button" value="Consultar"
+                                onclick="cancelarCita()"></td>
                     </tr>
                     <tr>
                         <td colspan="2">
