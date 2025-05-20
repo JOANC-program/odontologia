@@ -83,4 +83,44 @@ class Controlador
             echo "Hubo un error al cancelar la cita";
         }
     }
+    public function mostrarMedicos()
+    {
+        $Medico = new Medico();
+        $result = $Medico->consultarMedicos1();
+        require_once 'Vista/html/gestorMedicos.php';
+    }
+    public function guardarMedico($id, $nombres, $apellidos)
+    {
+        $Medico = new Medico();
+        $Medico->agregarMedico($id, $nombres, $apellidos);
+        header("Location: index.php?accion=medicos");
+        exit;
+    }
+    public function editarMedico($id)
+    {
+        $Medico = new Medico();
+        $result = $Medico->consultarMedicoPorId($id);
+        require_once 'Vista/html/editarMedicos.php';
+    }
+
+    public function guardarEdicionMedico($id, $nombres, $apellidos)
+    {
+        $Medico = new Medico();
+        $Medico->actualizarMedico($id, $nombres, $apellidos);
+        header("Location: index.php?accion=medicos");
+        exit;
+    }
+    public function eliminarMedico($id)
+    {
+        $Medico = new Medico();
+        $result = $Medico->consultarMedicoPorId($id);
+        require_once 'Vista/html/eliminarMedicos.php';
+    }
+    public function guardarEliminacionMedico($id)
+    {
+        $Medico = new Medico();
+        $Medico->eliminarMedico($id);
+        header("Location: index.php?accion=medicos");
+        exit;
+    }
 }

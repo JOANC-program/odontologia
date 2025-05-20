@@ -1,10 +1,10 @@
-
 <?php
 require_once 'Controlador/Controlador.php';
 require_once 'Modelo/GestorCita.php';
 require_once 'Modelo/Cita.php';
 require_once 'Modelo/Paciente.php';
 require_once 'Modelo/Conexion.php';
+require_once 'Modelo/Medico.php';
 $controlador = new Controlador();
 if (isset($_GET["accion"])) {
     if ($_GET["accion"] == "asignar") {
@@ -14,9 +14,8 @@ if (isset($_GET["accion"])) {
     } elseif ($_GET["accion"] == "cancelar") {
         $controlador->verPagina('Vista/html/cancelar.php');
     } elseif ($_GET["accion"] == "medicos") {
-        $controlador->verPagina('Vista/html/gestorMedicos.php');
-    }
-    elseif ($_GET["accion"] == "guardarCita") {
+        $controlador->mostrarMedicos();
+    } elseif ($_GET["accion"] == "guardarCita") {
         $controlador->agregarCita(
             $_POST["asignarDocumento"],
 
@@ -45,8 +44,39 @@ if (isset($_GET["accion"])) {
         $controlador->verCita($_GET["numero"]);
     } elseif ($_GET["accion"] == "confirmarCancelar") {
         $controlador->confirmarCancelarCita($_GET["numero"]);
+    } elseif ($_GET["accion"] == "agregarMedico") {
+        require_once 'Vista/html/agregarMedicos.php';
+    } elseif ($_GET["accion"] == "guardarMedico") {
+        $controlador->guardarMedico(
+            $_POST["MedIdentificacion"],
+            $_POST["MedNombres"],
+            $_POST["MedApellidos"]
+        );
+    } elseif ($_GET["accion"] == "editarMedico") {
+        if (isset($_GET["id"])) {
+            $controlador->editarMedico($_GET["id"]);
+        } else {
+            echo "Error: Falta el parámetro id para editar médico.";
+        }
+    } elseif ($_GET["accion"] == "guardarEdicionMedico") {
+        $controlador->guardarEdicionMedico(
+            $_POST["MedIdentificacion"],
+            $_POST["MedNombres"],
+            $_POST["MedApellidos"]
+        );
+    } elseif ($_GET["accion"] == "eliminarMedico") {
+        if (isset($_GET["id"])) {
+            $controlador->eliminarMedico($_GET["id"]);
+        } else {
+            echo "Error: Falta el parámetro id para editar médico.";
+        }
+    } elseif ($_GET["accion"] == "guardarEliminacionMedico") {
+        $controlador->guardarEliminacionMedico(
+            $_POST["MedIdentificacion"],
+            $_POST["MedNombres"],
+            $_POST["MedApellidos"]
+        );
     }
 } else {
     $controlador->verPagina('Vista/html/inicio.php');
 }
-?>
