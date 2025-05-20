@@ -9,6 +9,7 @@
 <body>
     <?php
     if ($result->num_rows > 0) {
+        echo "<!--PACIENTE_EXISTE-->";
     ?>
         <table>
             <tr>
@@ -33,11 +34,9 @@
     } else {
     ?>
         <p>El paciente no existe en la base de datos.</p>
-        <input type="button" name="ingPaciente" id="ingPaciente" value="Ingresar
-Paciente" onclick="mostrarFormulario()">
+        <input type="button" name="ingPaciente" id="ingPaciente" value="Ingresar Paciente" onclick="mostrarFormulario()">
     <?php
     }
     ?>
 </body>
-
 </html>

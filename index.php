@@ -13,7 +13,10 @@ if (isset($_GET["accion"])) {
         $controlador->verPagina('Vista/html/consultar.php');
     } elseif ($_GET["accion"] == "cancelar") {
         $controlador->verPagina('Vista/html/cancelar.php');
-    } elseif ($_GET["accion"] == "guardarCita") {
+    } elseif ($_GET["accion"] == "medicos") {
+        $controlador->verPagina('Vista/html/gestorMedicos.php');
+    }
+    elseif ($_GET["accion"] == "guardarCita") {
         $controlador->agregarCita(
             $_POST["asignarDocumento"],
 
