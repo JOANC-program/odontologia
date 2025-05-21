@@ -18,6 +18,46 @@ $(document).ready(function () {
             "Cancelar": cancelar
         }
     });
+
+    $("#frmMedico").dialog({
+        autoOpen: false,
+        height: 310,
+        width: 400,
+        modal: true,
+        buttons: {
+            "Insertar": insertarMedico,
+            "Cancelar": cancelar
+        }
+    });
+    
+    // Modal editar médico
+    $("#frmEditarMedico").dialog({
+        autoOpen: false,
+        height: 310,
+        width: 400,
+        modal: true,
+        buttons: {
+            "Guardar Cambios": function () {
+                editarMedico();
+            },
+            "Cancelar": cancelar
+        }
+    });
+
+    $("#abrirModalAgregarMedico").click(function (e) {
+        e.preventDefault();
+        $("#agregarMedico")[0].reset();
+        $("#frmMedico").dialog('open');
+    });
+
+    // Evento para abrir el modal y cargar datos
+    $(".btnEditarMedico").click(function (e) {
+        e.preventDefault();
+        $("#editMedIdentificacion").val($(this).data("id"));
+        $("#editMedNombres").val($(this).data("nombres"));
+        $("#editMedApellidos").val($(this).data("apellidos"));
+        $("#frmEditarMedico").dialog('open');
+    });
 });
 function consultarPaciente() {
     var url = "index.php?accion=ConsultarPaciente&documento=" + $("#asignarDocumento").val();
@@ -86,3 +126,27 @@ function confirmarCancelar(numero) {
     }
     $("#cancelarConsultar").trigger("click");
 }
+function insertarMedico() {
+    var queryString = $("#agregarMedico").serialize();
+    var url = "index.php?accion=guardarMedico";
+    $.post(url, queryString, function () {
+        location.reload();
+    });
+    $("#frmMedico").dialog('close');
+}
+function editarMedico() {
+    var datos = $("#editarMedico").serialize();
+    $.post("index.php?accion=guardarEdicionMedico", datos, function () {
+        location.reload();
+    });
+    $("#frmEditarMedico").dialog('close');
+}
+$(document).on("click", ".btnEliminarMedico", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    if (confirm("¿Estás seguro de que deseas eliminar este médico?")) {
+        $.post("index.php?accion=guardarEliminacionMedico", { MedIdentificacion: id }, function () {
+            location.reload();
+        });
+    }
+});

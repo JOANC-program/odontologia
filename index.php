@@ -72,9 +72,7 @@ if (isset($_GET["accion"])) {
         }
     } elseif ($_GET["accion"] == "guardarEliminacionMedico") {
         $controlador->guardarEliminacionMedico(
-            $_POST["MedIdentificacion"],
-            $_POST["MedNombres"],
-            $_POST["MedApellidos"]
+            $_POST["MedIdentificacion"]
         );
     }
 } else {
