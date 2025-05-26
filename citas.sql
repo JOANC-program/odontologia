@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-05-2025 a las 21:41:03
+-- Tiempo de generación: 25-05-2025 a las 23:07:15
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -49,7 +49,9 @@ INSERT INTO `citas` (`CitNumero`, `CitFecha`, `CitHora`, `CitPaciente`, `CitMedi
 (8, '2025-05-17', '08:40:00', '123', '12345', 1, 'Cancelada', 'Ninguna'),
 (9, '2025-05-28', '11:00:00', '123', '12345', 1, 'Cancelada', 'Ninguna'),
 (13, '2025-05-29', '11:00:00', '123', '12345', 1, 'Solicitada', 'Ninguna'),
-(22, '2025-05-28', '10:20:00', '1212', '12345', 2, 'Solicitada', 'Ninguna');
+(22, '2025-05-28', '10:20:00', '1212', '12345', 2, 'Solicitada', 'Ninguna'),
+(23, '2025-05-26', '10:00:00', '1212', '67890', 2, 'Solicitada', 'Ninguna'),
+(24, '2025-05-22', '10:40:00', '1212', '94839', 1, 'Solicitada', 'Ninguna');
 
 -- --------------------------------------------------------
 
@@ -107,17 +109,18 @@ INSERT INTO `horas` (`hora`) VALUES
 CREATE TABLE `medicos` (
   `MedIdentificacion` char(10) NOT NULL,
   `MedNombres` varchar(50) NOT NULL,
-  `MedApellidos` varchar(50) NOT NULL
+  `MedApellidos` varchar(50) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `medicos`
 --
 
-INSERT INTO `medicos` (`MedIdentificacion`, `MedNombres`, `MedApellidos`) VALUES
-('12345', 'Pepito ', 'Perez'),
-('67890', 'Pepita', 'Mendieta'),
-('94839', 'Luis', 'Hernandez');
+INSERT INTO `medicos` (`MedIdentificacion`, `MedNombres`, `MedApellidos`, `id_usuario`) VALUES
+('12345', 'Pepitoo', 'Perez', NULL),
+('67890', 'Pepita', 'Mendieta', NULL),
+('94839', 'Luis', 'Hernandez', NULL);
 
 -- --------------------------------------------------------
 
@@ -130,16 +133,18 @@ CREATE TABLE `pacientes` (
   `PacNombres` varchar(50) NOT NULL,
   `PacApellidos` varchar(50) DEFAULT NULL,
   `PacFechaNacimiento` date NOT NULL,
-  `PacSexo` enum('M','F') NOT NULL
+  `PacSexo` enum('M','F','O') NOT NULL,
+  `correo` varchar(100) DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `pacientes`
 --
 
-INSERT INTO `pacientes` (`PacIdentificacion`, `PacNombres`, `PacApellidos`, `PacFechaNacimiento`, `PacSexo`) VALUES
-('1212', 'Pepe', 'Rojas', '2005-02-23', 'M'),
-('123', 'Santiago', 'Arevalo', '2000-06-23', 'M');
+INSERT INTO `pacientes` (`PacIdentificacion`, `PacNombres`, `PacApellidos`, `PacFechaNacimiento`, `PacSexo`, `correo`, `id_usuario`) VALUES
+('1212', 'Pepe', 'Rojas', '2005-02-23', 'M', NULL, NULL),
+('123', 'Santiago', 'Arevalo', '2000-06-23', 'M', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -150,11 +155,24 @@ INSERT INTO `pacientes` (`PacIdentificacion`, `PacNombres`, `PacApellidos`, `Pac
 CREATE TABLE `tratamientos` (
   `TraNumero` int(11) NOT NULL,
   `TraFechaAsignado` date NOT NULL,
-  `TraDescripcion` text NOT NULL,
-  `TraFechaInicio` date NOT NULL,
-  `TraFechaFin` date NOT NULL,
-  `TraObservaciones` text NOT NULL,
-  `TraPaciente` char(10) NOT NULL
+  `TraDescripcion` text DEFAULT NULL,
+  `TraFechaInicio` date DEFAULT NULL,
+  `TraFechaFin` date DEFAULT NULL,
+  `TraObservaciones` text DEFAULT NULL,
+  `TraPaciente` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `correo` varchar(100) DEFAULT NULL,
+  `contrasena` varchar(255) NOT NULL,
+  `rol` enum('paciente','medico','admin') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -180,13 +198,15 @@ ALTER TABLE `consultorios`
 -- Indices de la tabla `medicos`
 --
 ALTER TABLE `medicos`
-  ADD PRIMARY KEY (`MedIdentificacion`);
+  ADD PRIMARY KEY (`MedIdentificacion`),
+  ADD KEY `fk_medicos_usuarios` (`id_usuario`);
 
 --
 -- Indices de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  ADD PRIMARY KEY (`PacIdentificacion`);
+  ADD PRIMARY KEY (`PacIdentificacion`),
+  ADD KEY `fk_pacientes_usuarios` (`id_usuario`);
 
 --
 -- Indices de la tabla `tratamientos`
@@ -196,6 +216,13 @@ ALTER TABLE `tratamientos`
   ADD KEY `TraPaciente` (`TraPaciente`);
 
 --
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `correo` (`correo`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -203,13 +230,19 @@ ALTER TABLE `tratamientos`
 -- AUTO_INCREMENT de la tabla `citas`
 --
 ALTER TABLE `citas`
-  MODIFY `CitNumero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `CitNumero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `tratamientos`
 --
 ALTER TABLE `tratamientos`
   MODIFY `TraNumero` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -224,10 +257,22 @@ ALTER TABLE `citas`
   ADD CONSTRAINT `citas_ibfk_3` FOREIGN KEY (`CitConsultorio`) REFERENCES `consultorios` (`ConNumero`);
 
 --
+-- Filtros para la tabla `medicos`
+--
+ALTER TABLE `medicos`
+  ADD CONSTRAINT `fk_medicos_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `pacientes`
+--
+ALTER TABLE `pacientes`
+  ADD CONSTRAINT `fk_pacientes_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+
+--
 -- Filtros para la tabla `tratamientos`
 --
 ALTER TABLE `tratamientos`
-  ADD CONSTRAINT `Tratamientos_ibfk_1` FOREIGN KEY (`TraPaciente`) REFERENCES `pacientes` (`PacIdentificacion`);
+  ADD CONSTRAINT `tratamientos_ibfk_1` FOREIGN KEY (`TraPaciente`) REFERENCES `pacientes` (`PacIdentificacion`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

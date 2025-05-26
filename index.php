@@ -5,17 +5,21 @@ require_once 'Modelo/Cita.php';
 require_once 'Modelo/Paciente.php';
 require_once 'Modelo/Conexion.php';
 require_once 'Modelo/Medico.php';
+require_once 'Modelo/Registro.php';
 $controlador = new Controlador();
 if (isset($_GET["accion"])) {
     if ($_GET["accion"] == "asignar") {
         $controlador->cargarAsignar();
-    } elseif ($_GET["accion"] == "consultar") {
+    }elseif ($_GET["accion"] == "consultar") {
         $controlador->verPagina('Vista/html/consultar.php');
     } elseif ($_GET["accion"] == "cancelar") {
         $controlador->verPagina('Vista/html/cancelar.php');
     } elseif ($_GET["accion"] == "medicos") {
         $controlador->mostrarMedicos();
-    } elseif ($_GET["accion"] == "guardarCita") {
+    } elseif ($_GET["accion"] == "inicio") {
+        $controlador->mostrarinicio();
+    }
+    elseif ($_GET["accion"] == "guardarCita") {
         $controlador->agregarCita(
             $_POST["asignarDocumento"],
 
@@ -74,7 +78,40 @@ if (isset($_GET["accion"])) {
         $controlador->guardarEliminacionMedico(
             $_POST["MedIdentificacion"]
         );
+    } elseif ($_GET["accion"] == "registrarUsuario") {
+        $correo = $_POST["correo"];
+        $contrasena = $_POST["contrasena"];
+        $rol = $_POST["rol"]; // "paciente"
+        $PacIdentificacion = $_POST["PacIdentificacion"];
+        $PacNombres = $_POST["PacNombres"];
+        $PacApellidos = $_POST["PacApellidos"];
+        $PacFechaNacimiento = $_POST["PacFechaNacimiento"];
+        $PacSexo = $_POST["PacSexo"];
+
+        $controlador->registrarUsuarioPaciente(
+            $correo,
+            $contrasena,
+            $rol,
+            $PacIdentificacion,
+            $PacNombres,
+            $PacApellidos,
+            $PacFechaNacimiento,
+            $PacSexo
+        );
+    } elseif ($_GET["accion"] == "registro") {
+        $controlador->verPagina('Vista/html/registro.php');
+    }
+    elseif ($_GET["accion"] == "login") {
+        $usuario = $_POST["usuario"];
+        $contrasena = $_POST["contrasenalogin"];
+        $rol = $_POST["rollogin"];
+        $controlador->Login($usuario, $contrasena, $rol);
+    } elseif ($_GET["accion"] == "cerrarSesion") {
+        session_start();
+        session_destroy();
+        header("Location: index.php");
+        exit;
     }
 } else {
-    $controlador->verPagina('Vista/html/inicio.php');
+    $controlador->verPagina('Vista/html/iniciologin.php');
 }

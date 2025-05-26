@@ -12,7 +12,7 @@
             <h1>Sistema de Gestión Odontológica</h1>
         </div>
         <ul id="menu">
-            <li class="activa"><a href="index.php">inicio</a> </li>
+            <li class="activa"><a href="index.php?accion=inicio">inicio</a> </li>
             <li><a href="index.php?accion=asignar">Asignar</a> </li>
             <li><a href="index.php?accion=consultar">Consultar Cita</a> </li>
             <li><a href="index.php?accion=cancelar">Cancelar Cita</a> </li>
