@@ -165,11 +165,11 @@ class Controlador
             } elseif ($usuario['rol'] === 'medico') {
                 header('Location: Vista/html/medico.php');
             } elseif ($usuario['rol'] === 'paciente') {
-                header('Location: index.php?accion=inicio');
+                header('Location: index.php?accion=paciente');
             }
             exit;
         } else {
-            echo "<script>alert('Credenciales incorrectas.');window.location='index.php?accion=inicio';</script>";
+            echo "<script>alert('Credenciales incorrectas.');window.location='index.php';</script>";
         }
     }
 }

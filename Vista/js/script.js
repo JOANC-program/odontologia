@@ -58,6 +58,36 @@ $(document).ready(function () {
         $("#editMedApellidos").val($(this).data("apellidos"));
         $("#frmEditarMedico").dialog('open');
     });
+
+    // Validación del formulario de registro
+    $(".registration-form").on("submit", function (e) {
+        console.log("Validando registro...");
+        const id = $("#id-number").val() ? $("#id-number").val().trim() : "";
+        const nombre = $("#first-name").val() ? $("#first-name").val().trim() : "";
+        const apellido = $("#last-name").val() ? $("#last-name").val().trim() : "";
+        const sexo = $("#sexo").val();
+        const fecha = $("#birth-date").val();
+        const correo = $("#email").val() ? $("#email").val().trim() : "";
+        const pass = $("#password").val();
+        const pass2 = $("#confirm-password").val();
+        const terms = $("#terms").is(":checked");
+
+        if (!id || !nombre || !apellido || !sexo || !fecha || !correo || !pass || !pass2) {
+            alert("Por favor, complete todos los campos obligatorios.");
+            e.preventDefault();
+            return false;
+        }
+        if (pass !== pass2) {
+            alert("Las contraseñas no coinciden.");
+            e.preventDefault();
+            return false;
+        }
+        if (!terms) {
+            alert("Debe aceptar los términos y condiciones.");
+            e.preventDefault();
+            return false;
+        }
+    });
 });
 function consultarPaciente() {
     var url = "index.php?accion=ConsultarPaciente&documento=" + $("#asignarDocumento").val();

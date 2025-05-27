@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Vista/css/inicio.css">
+    <link rel="stylesheet" href="/odontologia/Vista/css/inicio.css">
     <title>Document</title>
 </head>
 
@@ -14,7 +14,7 @@
     </ul>
     <div class="container">
         <h1>Bienvenido a la Clínica Dental Sonrisa</h1>
-        <form  action="index.php?accion=login" method="POST">
+        <form action="/odontologia/index.php?accion=login" method="POST">
             <label for="usuario">Correo Usuario:</label>
             <input type="text" id="usuario" name="usuario" required>
 
@@ -29,7 +29,7 @@
             </select>
 
             <button type="submit">Iniciar Sesión</button>
-            <a href="index.php?accion=registro">¿No tienes cuenta? Regístrate aquí</a>
+            <a href="/odontologia/index.php?accion=registro">¿No tienes cuenta? Regístrate aquí</a>
             <a href="index.php?accion=inicio">aaa</a>
         </form>
     </div>

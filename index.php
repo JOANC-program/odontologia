@@ -18,6 +18,8 @@ if (isset($_GET["accion"])) {
         $controlador->mostrarMedicos();
     } elseif ($_GET["accion"] == "inicio") {
         $controlador->mostrarinicio();
+    }elseif ($_GET["accion"] == "paciente") {
+        $controlador->verPagina('Vista/html/paciente.php');
     }
     elseif ($_GET["accion"] == "guardarCita") {
         $controlador->agregarCita(

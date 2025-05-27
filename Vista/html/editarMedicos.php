@@ -4,6 +4,10 @@
 <head>
     <title>Editar Médico</title>
     <link rel="stylesheet" type="text/css" href="Vista/css/estilos.css">
+    <link href="Vista/jquery/jquery-ui-1.14.1/jquery-ui.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="Vista/jquery/jquery.js"></script>
+    <script src="Vista/jquery/jquery-ui-1.14.1/jquery-ui.js" type="text/javascript"></script>
+    <script src="Vista/js/script.js" type="text/javascript"></script>
 </head>
 <body>
     <div id="contenedor">

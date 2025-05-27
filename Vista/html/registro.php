@@ -3,10 +3,13 @@
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Clínica Dental - Registro de Pacientes</title>
     <link rel="stylesheet" href="/odontologia/Vista/css/registro.css" />
+    <link href="Vista/jquery/jquery-ui-1.14.1/jquery-ui.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="Vista/jquery/jquery.js"></script>
+    <script src="Vista/jquery/jquery-ui-1.14.1/jquery-ui.js" type="text/javascript"></script>
+    <script src="Vista/js/script.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -27,8 +30,7 @@
                     <div class="input-container">
                         <!-- Número de identificación -->
                         <input type="text" name="PacIdentificacion" id="id-number" class="form-input" required
-                            pattern=".{5,}"
-                            title="El número de identificación debe tener al menos 5 caracteres">
+                            pattern=".{5,}" title="El número de identificación debe tener al menos 5 caracteres">
                         <label for="id-number" class="form-label">Número de identificación*</label>
                     </div>
                 </div>
@@ -71,7 +73,8 @@
                 <div class="form-group">
                     <div class="input-container">
                         <!-- Fecha de nacimiento -->
-                        <input type="date" name="PacFechaNacimiento" id="birth-date" class="form-input date-input" required>
+                        <input type="date" name="PacFechaNacimiento" id="birth-date" class="form-input date-input"
+                            required>
                         <label for="birth-date" class="form-label date-label">Fecha de nacimiento*</label>
                     </div>
                 </div>
