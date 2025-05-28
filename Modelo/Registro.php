@@ -42,5 +42,20 @@ class Registro
             return false;
         }
     }
+
+    public function obtenerDocumentoPacientePorUsuario($id_usuario)
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "SELECT PacIdentificacion FROM pacientes WHERE id_usuario = " . intval($id_usuario);
+        $conexion->consulta($sql);
+        $result = $conexion->obtenerResult();
+        $doc = null;
+        if ($row = $result->fetch_assoc()) {
+            $doc = $row['PacIdentificacion'];
+        }
+        $conexion->cerrar();
+        return $doc;
+    }
 }
 ?>

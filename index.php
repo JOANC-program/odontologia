@@ -10,7 +10,7 @@ $controlador = new Controlador();
 if (isset($_GET["accion"])) {
     if ($_GET["accion"] == "asignar") {
         $controlador->cargarAsignar();
-    }elseif ($_GET["accion"] == "consultar") {
+    } elseif ($_GET["accion"] == "consultar") {
         $controlador->verPagina('Vista/html/consultar.php');
     } elseif ($_GET["accion"] == "cancelar") {
         $controlador->verPagina('Vista/html/cancelar.php');
@@ -18,10 +18,11 @@ if (isset($_GET["accion"])) {
         $controlador->mostrarMedicos();
     } elseif ($_GET["accion"] == "inicio") {
         $controlador->mostrarinicio();
-    }elseif ($_GET["accion"] == "paciente") {
+    } elseif ($_GET["accion"] == "paciente") {
         $controlador->verPagina('Vista/html/paciente.php');
-    }
-    elseif ($_GET["accion"] == "guardarCita") {
+    } elseif ($_GET["accion"] == "consultar_paciente") {
+        $controlador->verCitasPacienteLogueado();
+    } elseif ($_GET["accion"] == "guardarCita") {
         $controlador->agregarCita(
             $_POST["asignarDocumento"],
 
@@ -102,8 +103,7 @@ if (isset($_GET["accion"])) {
         );
     } elseif ($_GET["accion"] == "registro") {
         $controlador->verPagina('Vista/html/registro.php');
-    }
-    elseif ($_GET["accion"] == "login") {
+    } elseif ($_GET["accion"] == "login") {
         $usuario = $_POST["usuario"];
         $contrasena = $_POST["contrasenalogin"];
         $rol = $_POST["rollogin"];
@@ -113,6 +113,8 @@ if (isset($_GET["accion"])) {
         session_destroy();
         header("Location: index.php");
         exit;
+    } elseif ($_GET["accion"] == "detalles_cita_paciente") {
+        $controlador->detalles_cita_paciente($_GET["numero"]);
     }
 } else {
     $controlador->verPagina('Vista/html/iniciologin.php');

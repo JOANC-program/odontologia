@@ -1,7 +1,4 @@
-<?php
-session_start();
-$rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : null;
-?>
+
 <!DOCTYPE html>
 <html>
 
@@ -20,19 +17,12 @@ $rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : null;
             <h1>Sistema de Gestión Odontológica</h1>
         </div>
         <ul id="menu">
-            <?php if ($rol === 'admin'): ?>
                 <li><a href="index.php?accion=inicio">inicio</a> </li>
                 <li><a href="index.php?accion=asignar">Asignar</a> </li>
                 <li class="activa"><a href="index.php?accion=consultar">Consultar Cita</a>
                 </li>
                 <li><a href="index.php?accion=cancelar">Cancelar Cita</a> </li>
                 <li><a href="index.php?accion=medicos">Gestor Medicos</a> </li>
-            <?php endif; ?>
-            <?php if ($rol === 'paciente'): ?>
-                <li><a href="index.php?accion=paciente">Inicio</a></li>
-                <li><a href="index.php?accion=consultar">Consultar Cita</a></li>
-                <li class="activa"><a href="index.php?accion=cancelar">Cancelar Cita</a></li>
-            <?php endif; ?>
         </ul>
         <div id="contenido">
             <h2>Consultar Cita</h2>

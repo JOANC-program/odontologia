@@ -89,7 +89,7 @@ class Controlador
         $result = $Medico->consultarMedicos1();
         require_once 'Vista/html/gestorMedicos.php';
     }
-     public function mostrarinicio()
+    public function mostrarinicio()
     {
         require_once 'Vista/html/inicio.php';
     }
@@ -165,11 +165,33 @@ class Controlador
             } elseif ($usuario['rol'] === 'medico') {
                 header('Location: Vista/html/medico.php');
             } elseif ($usuario['rol'] === 'paciente') {
+                $doc = $registro->obtenerDocumentoPacientePorUsuario($usuario['id']);
+                if ($doc) {
+                    $_SESSION['documento_paciente'] = $doc;
+                }
                 header('Location: index.php?accion=paciente');
             }
             exit;
         } else {
             echo "<script>alert('Credenciales incorrectas.');window.location='index.php';</script>";
         }
+    }
+    public function verCitasPacienteLogueado()
+    {
+        session_start();
+        if (isset($_SESSION['documento_paciente'])) {
+            $doc = $_SESSION['documento_paciente'];
+            $gestorCita = new GestorCita();
+            $result = $gestorCita->consultarCitasPorDocumento($doc);
+            require_once 'Vista/html/consultar_paciente.php';
+        } else {
+            echo "<script>alert('No hay paciente logueado.');window.location='index.php';</script>";
+        }
+    }
+    public function detalles_cita_paciente($numero)
+    {
+        $gestorCita = new GestorCita();
+        $result = $gestorCita->consultarCitaPorId($numero);
+        require_once 'Vista/html/detalles_paciente.php';
     }
 }

@@ -12,7 +12,7 @@
         </div>
         <ul id="menu">
             <li class="activa"><a href="index.php?accion=paciente">Inicio</a></li>
-            <li><a href="index.php?accion=consultar">Consultar Cita</a> </li>
+            <li><a href="index.php?accion=consultar_paciente">Mis Citas</a></li>
             <li><a href="index.php?accion=cancelar">Cancelar Cita</a> </li>
         </ul>
         <div id="contenido">
