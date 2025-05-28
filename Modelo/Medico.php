@@ -10,11 +10,11 @@ class Medico{
         $conexion->cerrar();
         return $result;
     }
-    public function agregarMedico($id, $nombres, $apellidos)
+    public function agregarMedico($id, $nombres, $apellidos, $correo)
     {
         $conexion = new Conexion();
         $conexion->abrir();
-        $sql = "INSERT INTO Medicos (MedIdentificacion, MedNombres, MedApellidos) VALUES ('$id', '$nombres', '$apellidos')";
+        $sql = "INSERT INTO Medicos (MedIdentificacion, MedNombres, MedApellidos, correo) VALUES ('$id', '$nombres', '$apellidos', '$correo')";
         $conexion->consulta($sql);
         $conexion->cerrar();
     }

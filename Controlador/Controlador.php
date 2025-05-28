@@ -93,10 +93,10 @@ class Controlador
     {
         require_once 'Vista/html/inicio.php';
     }
-    public function guardarMedico($id, $nombres, $apellidos)
+    public function guardarMedico($id, $nombres, $apellidos, $correo)
     {
         $Medico = new Medico();
-        $Medico->agregarMedico($id, $nombres, $apellidos);
+        $Medico->agregarMedico($id, $nombres, $apellidos, $correo);
         header("Location: index.php?accion=medicos");
         exit;
     }
@@ -163,7 +163,7 @@ class Controlador
             if ($usuario['rol'] === 'admin') {
                 header('Location: Vista/html/admin.php');
             } elseif ($usuario['rol'] === 'medico') {
-                header('Location: Vista/html/medico.php');
+                header('Location: index.php?accion=vistamedico');
             } elseif ($usuario['rol'] === 'paciente') {
                 $doc = $registro->obtenerDocumentoPacientePorUsuario($usuario['id']);
                 if ($doc) {
@@ -193,5 +193,27 @@ class Controlador
         $gestorCita = new GestorCita();
         $result = $gestorCita->consultarCitaPorId($numero);
         require_once 'Vista/html/detalles_paciente.php';
+    }
+    public function cancelarCitaPaciente($numero)
+    {
+        $gestorCita = new GestorCita();
+        $registros = $gestorCita->cancelarCita($numero);
+        if ($registros > 0) {
+            echo "<script>alert('La cita se ha cancelado con éxito');window.location='index.php?accion=cancelar_paciente';</script>";
+        } else {
+            echo "<script>alert('Hubo un error al cancelar la cita');window.location='index.php?accion=cancelar_paciente';</script>";
+        }
+    }
+    public function verCitasPacienteParaCancelar()
+    {
+        session_start();
+        if (isset($_SESSION['documento_paciente'])) {
+            $doc = $_SESSION['documento_paciente'];
+            $gestorCita = new GestorCita();
+            $result = $gestorCita->consultarCitasPorDocumento($doc);
+            require_once 'Vista/html/cancelar_paciente.php';
+        } else {
+            echo "<script>alert('No hay paciente logueado.');window.location='index.php';</script>";
+        }
     }
 }

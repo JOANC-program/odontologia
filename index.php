@@ -57,7 +57,8 @@ if (isset($_GET["accion"])) {
         $controlador->guardarMedico(
             $_POST["MedIdentificacion"],
             $_POST["MedNombres"],
-            $_POST["MedApellidos"]
+            $_POST["MedApellidos"],
+            $_POST["correo"]
         );
     } elseif ($_GET["accion"] == "editarMedico") {
         if (isset($_GET["id"])) {
@@ -115,6 +116,12 @@ if (isset($_GET["accion"])) {
         exit;
     } elseif ($_GET["accion"] == "detalles_cita_paciente") {
         $controlador->detalles_cita_paciente($_GET["numero"]);
+    } elseif ($_GET["accion"] == "cancelar_paciente") {
+        $controlador->verCitasPacienteParaCancelar();
+    } elseif ($_GET["accion"] == "cancelarCitaPaciente") {
+        $controlador->cancelarCitaPaciente($_GET["numero"]);
+    } elseif ($_GET["accion"] == "vistamedico") {
+        $controlador->verPagina('Vista/html/medico.php');
     }
 } else {
     $controlador->verPagina('Vista/html/iniciologin.php');

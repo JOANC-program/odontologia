@@ -25,7 +25,9 @@
                         <td>Apellidos</td>
                         <td><input type="text" name="MedApellidos" required></td>
                     </tr>
-                    <!-- Agrega más campos si tienes más -->
+                    <tr>
+                        <td>Correo Electrónico</td>
+                        <td><input type="email" name="correo" required></td>
                     <tr>
                         <td colspan="2"><input type="submit" value="Guardar Médico"></td>
                     </tr>

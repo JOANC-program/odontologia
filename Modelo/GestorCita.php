@@ -118,4 +118,15 @@ CitFecha = '$fecha'"
         $conexion->cerrar();
         return $filasAfectadas;
     }
+    public function cancelarCitasPaciente($cita)
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "UPDATE citas SET CitEstado = 'Cancelada' "
+            . " WHERE CitNumero = $cita ";
+        $conexion->consulta($sql);
+        $filasAfectadas = $conexion->obtenerFilasAfectadas();
+        $conexion->cerrar();
+        return $filasAfectadas;
+    }
 }

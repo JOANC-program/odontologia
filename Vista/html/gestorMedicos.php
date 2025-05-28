@@ -42,6 +42,10 @@
                             <td>Apellidos</td>
                             <td><input type="text" name="MedApellidos" id="MedApellidos"></td>
                         </tr>
+                        <tr>
+                            <td>Correo Electronico</td>
+                            <td><input type="email" name="correo" id="correo"></td>
+                        </tr>
                     </table>
                 </form>
             </div>
@@ -67,12 +71,13 @@
             <?php
             if (isset($result) && $result->num_rows > 0) {
                 echo "<table border='1'>";
-                echo "<tr><th>Identificación</th><th>Nombres</th><th>Apellidos</th><th>Accion1</th><th>Accion2</th></tr>";
+                echo "<tr><th>Identificación</th><th>Nombres</th><th>Apellidos</th><th>Correo</th><th>Accion1</th><th>Accion2</th></tr>";
                 while ($fila = $result->fetch_object()) {
                     echo "<tr>";
                     echo "<td>" . $fila->MedIdentificacion . "</td>";
                     echo "<td>" . $fila->MedNombres . "</td>";
                     echo "<td>" . $fila->MedApellidos . "</td>";
+                    echo "<td>" . $fila->$correo . "</td>";
                     echo "<td>
     <a href='#' 
        class='btnEditarMedico' 
