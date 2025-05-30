@@ -99,13 +99,12 @@ class Controlador
         $Medico = new Medico();
         $registro = new Registro();
 
-        // 1. Guardar en la tabla medicos
-        $Medico->agregarMedico($id, $nombres, $apellidos, $correo);
-
-        // 2. Guardar en la tabla usuarios (contraseña por defecto, puedes cambiarla)
-        $contrasena = password_hash($id, PASSWORD_DEFAULT); // Por ejemplo, usa el ID como contraseña inicial
+        // 1. Registrar usuario y obtener el id
         $rol = 'medico';
-        $registro->registrarUsuario($correo, $id, $rol); // Aquí puedes usar $id o pedir una contraseña
+        $id_usuario = $registro->registrarUsuario($correo, $id, $rol);
+
+        // 2. Guardar en la tabla medicos incluyendo el id_usuario
+        $Medico->agregarMedico($id, $nombres, $apellidos, $correo, $id_usuario);
 
         header("Location: index.php?accion=medicos");
         exit;
@@ -173,6 +172,12 @@ class Controlador
             if ($usuario['rol'] === 'admin') {
                 header('Location: Vista/html/admin.php');
             } elseif ($usuario['rol'] === 'medico') {
+                // Obtener la identificación del médico por el id_usuario
+                $Medico = new Medico();
+                $result = $Medico->consultarMedicoPorUsuario($usuario['id']);
+                if ($row = $result->fetch_assoc()) {
+                    $_SESSION['identificacion_medico'] = $row['MedIdentificacion'];
+                }
                 header('Location: index.php?accion=vistamedico');
             } elseif ($usuario['rol'] === 'paciente') {
                 $doc = $registro->obtenerDocumentoPacientePorUsuario($usuario['id']);
@@ -224,6 +229,18 @@ class Controlador
             require_once 'Vista/html/cancelar_paciente.php';
         } else {
             echo "<script>alert('No hay paciente logueado.');window.location='index.php';</script>";
+        }
+    }
+    public function verCitasMedicoLogueado()
+    {
+        session_start();
+        if (isset($_SESSION['identificacion_medico'])) {
+            $medicoId = $_SESSION['identificacion_medico'];
+            $gestorCita = new GestorCita();
+            $result = $gestorCita->consultarCitasPorMedico($medicoId);
+            require_once 'Vista/html/consultar_medico.php';
+        } else {
+            echo "<script>alert('No hay médico logueado.');window.location='index.php';</script>";
         }
     }
 }

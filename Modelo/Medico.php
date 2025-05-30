@@ -10,11 +10,12 @@ class Medico{
         $conexion->cerrar();
         return $result;
     }
-    public function agregarMedico($id, $nombres, $apellidos, $correo)
+    public function agregarMedico($id, $nombres, $apellidos, $correo, $id_usuario)
     {
         $conexion = new Conexion();
         $conexion->abrir();
-        $sql = "INSERT INTO Medicos (MedIdentificacion, MedNombres, MedApellidos, correo) VALUES ('$id', '$nombres', '$apellidos', '$correo')";
+        $sql = "INSERT INTO Medicos (MedIdentificacion, MedNombres, MedApellidos, correo, id_usuario) 
+                VALUES ('$id', '$nombres', '$apellidos', '$correo', '$id_usuario')";
         $conexion->consulta($sql);
         $conexion->cerrar();
     }
@@ -43,6 +44,16 @@ class Medico{
         $sql = "DELETE  FROM Medicos WHERE MedIdentificacion='$id'";
         $conexion->consulta($sql);
         $conexion->cerrar();
+    }
+    public function consultarMedicoPorUsuario($id_usuario)
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "SELECT MedIdentificacion FROM Medicos WHERE id_usuario = " . intval($id_usuario);
+        $conexion->consulta($sql);
+        $result = $conexion->obtenerResult();
+        $conexion->cerrar();
+        return $result;
     }
 }
 ?>

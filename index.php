@@ -122,6 +122,8 @@ if (isset($_GET["accion"])) {
         $controlador->cancelarCitaPaciente($_GET["numero"]);
     } elseif ($_GET["accion"] == "vistamedico") {
         $controlador->verPagina('Vista/html/medico.php');
+    } elseif ($_GET["accion"] == "consultar_medico") {
+        $controlador->verCitasMedicoLogueado();
     }
 } else {
     $controlador->verPagina('Vista/html/iniciologin.php');

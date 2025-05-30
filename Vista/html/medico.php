@@ -11,8 +11,8 @@
             <h1>Sistema de Gestión Odontológica</h1>
         </div>
         <ul id="menu">
-            <li class="activa"><a href="index.php?accion=paciente">Inicio</a></li>
-            <li><a href="index.php?accion=consultar_medico">Consultar citas asociadas</a> </li>
+            <li class="activa"><a href="index.php?accion=vistamedico">Inicio</a></li>
+            <li><a href="index.php?accion=consultar_medico">Citas Asignadas</a> </li>
         </ul>
         <div id="contenido">
             <h2>Título de página</h2>

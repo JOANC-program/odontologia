@@ -129,4 +129,14 @@ CitFecha = '$fecha'"
         $conexion->cerrar();
         return $filasAfectadas;
     }
+    public function consultarCitasPorMedico($medicoId)
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "SELECT * FROM citas WHERE CitMedico = '$medicoId'";
+        $conexion->consulta($sql);
+        $result = $conexion->obtenerResult();
+        $conexion->cerrar();
+        return $result;
+    }
 }
