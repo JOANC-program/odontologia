@@ -12,10 +12,19 @@
             <h1>Sistema de Gestión Odontológica</h1>
         </div>
         <ul id="menu">
-            <li class="activa"><a href="index.php?accion=inicio">inicio</a> </li>
-            <li><a href="index.php?accion=asignar">Asignar</a> </li>
-            <li><a href="index.php?accion=consultar">Consultar Cita</a> </li>
-            <li><a href="index.php?accion=cancelar">Cancelar Cita</a> </li>
+            <?php if (!isset($_SESSION)) session_start(); ?>
+            <?php if ($_SESSION['rol'] == 'admin') { ?>
+                <li><a href="index.php?accion=paciente">Inicio</a></li>
+                <li class="activa"><a href="index.php?accion=inicio">inicio</a> </li>
+                <li><a href="index.php?accion=asignar">Asignar</a> </li>
+                <li><a href="index.php?accion=consultar">Consultar Cita</a> </li>
+                <li><a href="index.php?accion=cancelar">Cancelar Cita</a> </li>
+            <?php } elseif ($_SESSION['rol'] == 'paciente') { ?>
+                <li class="activa"><a href="index.php?accion=paciente">Inicio</a></li>
+                <li><a href="index.php?accion=consultar_paciente">Mis Citas</a></li>
+                <li><a href="index.php?accion=cancelar_paciente">Cancelar Cita</a> </li>
+                <li><a href="index.php?accion=asignar_paciente">Agendar Cita</a> </li>
+            <?php }?>
         </ul>
         <div id="contenido">
             <?php $fila = $result->fetch_object(); ?>
@@ -71,6 +80,13 @@
                     <td><?php echo $fila->citObservaciones; ?></td>
                 </tr>
             </table>
+
+            <!-- Botón para descargar PDF -->
+            <form action="index.php" method="get" target="_blank" style="margin-top:20px;">
+                <input type="hidden" name="accion" value="descargarCitaPDF">
+                <input type="hidden" name="numero" value="<?php echo $fila->CitNumero; ?>">
+                <button type="submit">Descargar PDF</button>
+            </form>
         </div>
     </div>
 </body>

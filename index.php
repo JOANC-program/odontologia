@@ -124,6 +124,10 @@ if (isset($_GET["accion"])) {
         $controlador->verPagina('Vista/html/medico.php');
     } elseif ($_GET["accion"] == "consultar_medico") {
         $controlador->verCitasMedicoLogueado();
+    } elseif ($_GET["accion"] == "asignar_paciente") {
+        $controlador->asignarCitaPaciente();
+    } elseif ($_GET["accion"] == "descargarCitaPDF") {
+        $controlador->descargarCitaPDF($_GET["numero"]);
     }
 } else {
     $controlador->verPagina('Vista/html/iniciologin.php');

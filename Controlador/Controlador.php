@@ -170,7 +170,7 @@ class Controlador
 
             // Redirigir según el rol
             if ($usuario['rol'] === 'admin') {
-                header('Location: Vista/html/admin.php');
+                header('Location: index.php?accion=inicio');
             } elseif ($usuario['rol'] === 'medico') {
                 // Obtener la identificación del médico por el id_usuario
                 $Medico = new Medico();
@@ -242,5 +242,46 @@ class Controlador
         } else {
             echo "<script>alert('No hay médico logueado.');window.location='index.php';</script>";
         }
+    }
+    public function asignarCitaPaciente()
+    {
+        session_start();
+        if (isset($_SESSION['documento_paciente'])) {
+            $doc = $_SESSION['documento_paciente'];
+            $gestorCita = new GestorCita();
+            $result = $gestorCita->consultarMedicos();
+            $result2 = $gestorCita->consultarConsultorios();
+            require 'Vista/html/asignar_paciente.php';
+        } else {
+            echo "<script>alert('No hay paciente logueado.');window.location='index.php';</script>";
+        }
+    }
+    public function descargarCitaPDF($numero)
+    {
+        require_once 'Vista/tcpdf/TCPDF-main/tcpdf.php';
+        $gestorCita = new GestorCita();
+        $result = $gestorCita->consultarCitaPorId($numero);
+        $fila = $result->fetch_object();
+
+        $pdf = new TCPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('helvetica', '', 12);
+
+        $html = '<h2>Confirmación de Cita</h2>
+        <table border="1" cellpadding="4">
+            <tr><td><b>Número</b></td><td>'.$fila->CitNumero.'</td></tr>
+            <tr><td><b>Paciente</b></td><td>'.$fila->PacNombres.' '.$fila->PacApellidos.'</td></tr>
+            <tr><td><b>Documento</b></td><td>'.$fila->PacIdentificacion.'</td></tr>
+            <tr><td><b>Médico</b></td><td>'.$fila->MedNombres.' '.$fila->MedApellidos.'</td></tr>
+            <tr><td><b>Fecha</b></td><td>'.$fila->CitFecha.'</td></tr>
+            <tr><td><b>Hora</b></td><td>'.$fila->CitHora.'</td></tr>
+            <tr><td><b>Consultorio</b></td><td>'.$fila->ConNombre.'</td></tr>
+            <tr><td><b>Estado</b></td><td>'.$fila->CitEstado.'</td></tr>
+            <tr><td><b>Observaciones</b></td><td>'.$fila->citObservaciones.'</td></tr>
+        </table>';
+
+        $pdf->writeHTML($html, true, false, true, false, '');
+        $pdf->Output('Cita_'.$fila->CitNumero.'.pdf', 'D');
+        exit;
     }
 }

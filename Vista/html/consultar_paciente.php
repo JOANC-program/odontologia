@@ -19,6 +19,7 @@
             <li><a href="index.php?accion=paciente">Inicio</a></li>
             <li class="activa"><a href="index.php?accion=consultar_paciente">Mis Citas</a></li>
             <li><a href="index.php?accion=cancelar_paciente">Cancelar Cita</a></li>
+            <li><a href="index.php?accion=asignar_paciente">Agendar Cita</a> </li>
         </ul>
         <div id="contenido">
             <h2>Mis Citas</h2>
