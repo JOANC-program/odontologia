@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-05-2025 a las 23:07:15
+-- Tiempo de generación: 30-05-2025 a las 05:53:21
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -51,7 +51,8 @@ INSERT INTO `citas` (`CitNumero`, `CitFecha`, `CitHora`, `CitPaciente`, `CitMedi
 (13, '2025-05-29', '11:00:00', '123', '12345', 1, 'Solicitada', 'Ninguna'),
 (22, '2025-05-28', '10:20:00', '1212', '12345', 2, 'Solicitada', 'Ninguna'),
 (23, '2025-05-26', '10:00:00', '1212', '67890', 2, 'Solicitada', 'Ninguna'),
-(24, '2025-05-22', '10:40:00', '1212', '94839', 1, 'Solicitada', 'Ninguna');
+(24, '2025-05-22', '10:40:00', '1212', '94839', 1, 'Solicitada', 'Ninguna'),
+(25, '2025-05-21', '11:00:00', '12345', '67890', 2, 'Cancelada', 'Ninguna');
 
 -- --------------------------------------------------------
 
@@ -110,17 +111,19 @@ CREATE TABLE `medicos` (
   `MedIdentificacion` char(10) NOT NULL,
   `MedNombres` varchar(50) NOT NULL,
   `MedApellidos` varchar(50) NOT NULL,
-  `id_usuario` int(11) DEFAULT NULL
+  `id_usuario` int(11) DEFAULT NULL,
+  `correo` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `medicos`
 --
 
-INSERT INTO `medicos` (`MedIdentificacion`, `MedNombres`, `MedApellidos`, `id_usuario`) VALUES
-('12345', 'Pepitoo', 'Perez', NULL),
-('67890', 'Pepita', 'Mendieta', NULL),
-('94839', 'Luis', 'Hernandez', NULL);
+INSERT INTO `medicos` (`MedIdentificacion`, `MedNombres`, `MedApellidos`, `id_usuario`, `correo`) VALUES
+('12345', 'Pepitoo', 'Perez', NULL, NULL),
+('22323', 'arte', 'aguita', NULL, 'arteaguita@gmail.com'),
+('67890', 'Pepita', 'Mendieta', NULL, NULL),
+('94839', 'Luis', 'Hernandez', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -144,7 +147,8 @@ CREATE TABLE `pacientes` (
 
 INSERT INTO `pacientes` (`PacIdentificacion`, `PacNombres`, `PacApellidos`, `PacFechaNacimiento`, `PacSexo`, `correo`, `id_usuario`) VALUES
 ('1212', 'Pepe', 'Rojas', '2005-02-23', 'M', NULL, NULL),
-('123', 'Santiago', 'Arevalo', '2000-06-23', 'M', NULL, NULL);
+('123', 'Santiago', 'Arevalo', '2000-06-23', 'M', NULL, NULL),
+('12345', 'Juan', 'Luis', '2001-05-05', 'M', 'soyjuanluis@gmail.com', 8);
 
 -- --------------------------------------------------------
 
@@ -174,6 +178,14 @@ CREATE TABLE `usuarios` (
   `contrasena` varchar(255) NOT NULL,
   `rol` enum('paciente','medico','admin') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `correo`, `contrasena`, `rol`) VALUES
+(8, 'soyjuanluis@gmail.com', '$2y$10$pSVArMAt6bS.5SFaxn7lAu8WpCqbbdC2ZpHr0C5l7.Sp4t04j7aXC', 'paciente'),
+(11, 'arteaguita@gmail.com', 'abc', 'medico');
 
 --
 -- Índices para tablas volcadas
@@ -230,7 +242,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `citas`
 --
 ALTER TABLE `citas`
-  MODIFY `CitNumero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `CitNumero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `tratamientos`
@@ -242,7 +254,7 @@ ALTER TABLE `tratamientos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restricciones para tablas volcadas
