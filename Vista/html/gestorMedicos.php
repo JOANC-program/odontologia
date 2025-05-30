@@ -77,7 +77,7 @@
                     echo "<td>" . $fila->MedIdentificacion . "</td>";
                     echo "<td>" . $fila->MedNombres . "</td>";
                     echo "<td>" . $fila->MedApellidos . "</td>";
-                    echo "<td>" . $fila->$correo . "</td>";
+                    echo "<td>" . $fila->correo . "</td>";
                     echo "<td>
     <a href='#' 
        class='btnEditarMedico' 

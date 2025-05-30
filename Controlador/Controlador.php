@@ -95,8 +95,18 @@ class Controlador
     }
     public function guardarMedico($id, $nombres, $apellidos, $correo)
     {
+        require_once 'Modelo/Registro.php';
         $Medico = new Medico();
+        $registro = new Registro();
+
+        // 1. Guardar en la tabla medicos
         $Medico->agregarMedico($id, $nombres, $apellidos, $correo);
+
+        // 2. Guardar en la tabla usuarios (contraseña por defecto, puedes cambiarla)
+        $contrasena = password_hash($id, PASSWORD_DEFAULT); // Por ejemplo, usa el ID como contraseña inicial
+        $rol = 'medico';
+        $registro->registrarUsuario($correo, $id, $rol); // Aquí puedes usar $id o pedir una contraseña
+
         header("Location: index.php?accion=medicos");
         exit;
     }

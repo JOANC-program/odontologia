@@ -30,7 +30,7 @@
 
             <button type="submit">Iniciar Sesión</button>
             <a href="/odontologia/index.php?accion=registro">¿No tienes cuenta? Regístrate aquí</a>
-            <a href="index.php?accion=vistamedico">aaa</a>
+            <a href="index.php?accion=inicio">aaa</a>
         </form>
     </div>
 </body>
